@@ -26,3 +26,9 @@ Demo program for a frontend with 8 bars, sending 3-bit signals over I2C. Not the
 Requires a Raspberry Pi Pico mounted on a [Pimoroni Pico Display Pack 2.8"](https://shop.pimoroni.com/products/pico-display-pack-2-8). Building requires the Pico SDK, Pico SDK Extras, and Pimoroni Pico libraries.
 
 Use buttons A/B to select the row, and X/Y to adjust the value.
+
+## pico-i2c-driver
+Final program to adapt USB serial data to I2C. Use CMake and the Pico SDK to build. Flash the built UF2 using the BOOT button.
+
+## Initial-Distribution-Board
+KiCAD PCB files for the first design of the distribution board, before integration with the power splitter and phase shifter. Production files for JLCPCB are included in `production/`.

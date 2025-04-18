@@ -43,41 +43,58 @@
 
 #include "mcc_generated_files/mcc.h"
 
+/**
+ * I2C receive interrupt handler
+ */
 static void I2C_Receive(void)
 {
     uint8_t i;
     uint8_t data = I2C1_Read();
+    // Push the value to the data bus
     LATC = data & 0x1F;
+    // Wait for a period of time
     for (i = 0; i < 200; i++);
+    // Send the right latch pulse
     switch (data >> 5) {
         case 0:
+            // Pulse L0
             L0_SetHigh();
             for (i = 0; i < 200; i++);
             L0_SetLow();
             break;
         case 1:
+            // Pulse L1
             L1_SetHigh();
             for (i = 0; i < 200; i++);
             L1_SetLow();
             break;
         case 2:
+            // Pulse L2
             L2_SetHigh();
             for (i = 0; i < 200; i++);
             L2_SetLow();
             break;
         case 3:
+            // Pulse L3
             L3_SetHigh();
             for (i = 0; i < 200; i++);
             L3_SetLow();
             break;
     }
+    // Send an acknowledgement to the host
     I2C1_SendAck();
 }
 
-void I2C_Addr(void)
+/**
+ * I2C address interrupt handler
+ */
+static void I2C_Addr(void)
 {
+    // Read the address to reset the register and stop clock stretching
     I2C1_ReadAddr();
+    // Set the byte count register to 1
     I2C1CNTL = 1;
+    // Send an acknowledgement to the host
     I2C1_SendAck();
 }
 
